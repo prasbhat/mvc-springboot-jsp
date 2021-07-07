@@ -30,8 +30,7 @@ We will be making the following changes, in order to make our Spring Boot projec
 </dependency>
 ```
 
-- We should inform Spring Boot to process the JSP files, so need to add following lines to the _
-  /src/main/resources/application.properties_ file.
+- We should inform Spring Boot to process the JSP files, so need to add following lines to the _/src/main/resources/application.properties_ file.
 
 ```
 spring.mvc.view.prefix=/WEB-INF/jsp/
