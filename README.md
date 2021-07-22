@@ -113,3 +113,5 @@ cd microservice-springboot-h2-jsp
 mvn package -DskipTests
 java -jar target/microservice-springboot-h2-jsp-0.0.1-SNAPSHOT.war
 ```
+
+More detailed documentation regarding this project can be found [here](https://myzonesoft.com/2021/07/22/create-user-interface-using-jsp-in-spring-boot/).
