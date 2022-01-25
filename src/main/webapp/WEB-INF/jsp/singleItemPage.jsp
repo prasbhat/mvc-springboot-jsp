@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="org.json.*" %>
 
 <html lang="en">
 <head>
@@ -11,29 +12,40 @@
         crossorigin="anonymous">
 
     <script type="text/javascript">
-            function submit(id) {
-                var jsonObj = {};
-                jsonObj['id']=id;
-                jsonObj['title']=document.getElementById('title').value;
-                jsonObj['description']=document.getElementById('description').value;
-                jsonObj['dueDate']=document.getElementById('dueDate').value;
-                jsonObj['status']=document.getElementById('status').value;
+        function submit(id) {
+            var jsonObj = {};
+            jsonObj['id']=id;
+            jsonObj['title']=document.getElementById('title').value;
+            jsonObj['description']=document.getElementById('description').value;
+            jsonObj['dueDate']=document.getElementById('dueDate').value;
+            jsonObj['status']=document.getElementById('status').value;
 
-                var fullPath = window.location.href;
-                var ctx= "${pageContext.request.contextPath}";
-                apiURL = fullPath.substring(0, fullPath.indexOf(ctx)) + ctx;
-                var http = new XMLHttpRequest();
+            var jsonCommentsArray=[];
+            var jsonCommentsObj={};
+            jsonCommentsObj["taskComments"]= document.getElementById('taskComments').value;
+            jsonCommentsArray.push(jsonCommentsObj);
+            jsonObj["todoTaskCommentsSet"] = jsonCommentsArray;
 
-                if(id > 0) {
-                    http.open("PUT", apiURL+"/update", true);
-                } else {
-                	http.open("POST", apiURL+"/create", true);
-                }
-                http.setRequestHeader("Content-type","application/json");
-                http.send(JSON.stringify(jsonObj));
-                window.location.href = apiURL+"/";
+            var fullPath = window.location.href;
+            var ctx= "${pageContext.request.contextPath}";
+            apiURL = fullPath.substring(0, fullPath.indexOf(ctx)) + ctx;
+            var http = new XMLHttpRequest();
+
+            if(id > 0) {
+                http.open("PUT", apiURL+"/update", true);
+            } else {
+                http.open("POST", apiURL+"/create", true);
             }
-        </script>
+            http.setRequestHeader("Content-type","application/json");
+            http.send(JSON.stringify(jsonObj));
+            window.location.href = apiURL+"/";
+        }
+
+        function addNewComments(){
+            var lTable = document.getElementById("commentsTable");
+            lTable.style.display = (lTable.style.display == "table") ? "none" : "table";
+        }
+    </script>
 </head>
 <body>
 	<div class="container" align="center">
@@ -55,6 +67,12 @@
                         <c:if test="${action == 'edit'}"><textarea name='description' id='description'
                             rows="3" cols="38">${todoItem.description}</textarea></c:if>
                     </td>
+                </tr><tr>
+                     <th>Creation Date</th>
+                     <td>
+                         <fmt:parseDate  value="${todoItem.creationDate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
+                         <fmt:formatDate value="${parsedDate}" type="date" pattern="dd-MMM-yyyy" />
+                     </td>
                 </tr><tr>
                     <th>Due Date</th>
                     <td>
@@ -80,7 +98,52 @@
                             </select>
                         </c:if>
                     </td>
+                </tr><tr>
+                    <th>Comments</th>
+                    <td>
+                        <c:if test="${todoItem.todoTaskCommentsSet.size() > 0}">
+                            <table class='table-bordered'>
+
+                                <thead>
+                                    <tr>
+                                        <th>Creation Date</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="comments" items="${todoItem.todoTaskCommentsSet}">
+                                        <tr>
+                                            <td>
+                                                <fmt:parseDate  value="${comments.creationDate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
+                                                <fmt:formatDate value="${parsedDate}" type="date" pattern="dd-MMM-yyyy" />
+                                            </td>
+                                            <td><c:out value="${comments.taskComments}"/></td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:if>
+                        <c:if test="${action == 'edit'}">
+                        <button class="btn btn-success" onclick=addNewComments()>Add New Comments</button>
+                        <table class='table-bordered' id="commentsTable" style="display:none;">
+                            <tbody>
+                                <tr>
+                                    <th>Description</th>
+                                    <td><textarea name='description' id='taskComments'
+                                    rows="3" cols="38"></textarea></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </c:if>
+                    </td>
                 </tr>
+                <c:if test="${action == 'edit'}">
+                <tr>
+                    <td colspan="2" align="center">
+                        <button class="btn btn-success" onclick=submit(${todoItem.id})>Submit</button>
+                    </td>
+                </tr>
+                </c:if>
             </tbody>
         </table>
 	</div>

@@ -17,15 +17,13 @@
         var http = new XMLHttpRequest();
 
         function redirectToSingleView(action, id) {
-            http.open("GET", apiURL+"/singleItemView/"+action+"/"+id, true);
-            http.send();
             window.location.href = apiURL+"/singleItemView/"+action+"/"+id;
         }
 
         function deleteById(id) {
             http.open("DELETE", apiURL+"/deleteById/"+id, true);
             http.send();
-            location.reload();
+            window.location.reload();
         }
     </script>
 </head>
@@ -41,6 +39,7 @@
                 <th>Description</th>
                 <th>Due Date</th>
                 <th>Status</th>
+                <th>No. Of Comments</th>
                 <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -56,13 +55,16 @@
                         <fmt:formatDate value="${parsedDate}" type="date" pattern="dd-MMM-yyyy" />
                     </td>
                     <td>${todo.status}</td>
+                    <td align="center">${todo.todoTaskCommentsSet.size()}</td>
                     <td>
-                    <button class="btn btn-success" onclick=redirectToSingleView('view','${todo.id}')>VIEW</button>
+                        <button class="btn btn-success" onclick=redirectToSingleView('view','${todo.id}')>VIEW</button>
                     </td>
                     <td>
-                    <button class="btn btn-success" onclick=redirectToSingleView('edit','${todo.id}')>EDIT</button>
+                        <button class="btn btn-success" onclick=redirectToSingleView('edit','${todo.id}')>EDIT</button>
                     </td>
-                    <td><button class="btn btn-warning" onclick=deleteById('${todo.id}')>DELETE</button></td>
+                    <td>
+                        <button class="btn btn-warning" onclick=deleteById('${todo.id}')>DELETE</button>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
