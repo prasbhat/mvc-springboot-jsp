@@ -105,5 +105,4 @@ public class TodoViewController implements TodoApplicationConstants {
         restTemplate.delete(base_uri+"/deleteById/"+id);
         LOGGER.info(MessageFormat.format(LOGGER_EXIT, className, methodName));
     }
-
 }
