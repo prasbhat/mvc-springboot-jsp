@@ -23,7 +23,7 @@
         function deleteById(id) {
             http.open("DELETE", apiURL+"/deleteById/"+id, true);
             http.send();
-            window.location.reload();
+           window.location.reload();
         }
     </script>
 </head>
@@ -57,13 +57,13 @@
                     <td>${todo.status}</td>
                     <td align="center">${todo.todoTaskCommentsSet.size()}</td>
                     <td>
-                        <button class="btn btn-success" onclick=redirectToSingleView('view','${todo.id}')>VIEW</button>
+                        <button class="btn btn-success" onclick=redirectToSingleView('view','${todo.systemTasksId}')>VIEW</button>
                     </td>
                     <td>
-                        <button class="btn btn-success" onclick=redirectToSingleView('edit','${todo.id}')>EDIT</button>
+                        <button class="btn btn-success" onclick=redirectToSingleView('edit','${todo.systemTasksId}')>EDIT</button>
                     </td>
                     <td>
-                        <button class="btn btn-warning" onclick=deleteById('${todo.id}')>DELETE</button>
+                        <button class="btn btn-warning" onclick=deleteById('${todo.systemTasksId}')>DELETE</button>
                     </td>
                 </tr>
             </c:forEach>

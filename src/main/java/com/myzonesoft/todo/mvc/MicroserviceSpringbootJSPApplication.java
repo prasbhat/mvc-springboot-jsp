@@ -1,13 +1,13 @@
-package com.myzonesoft.microservice.todo;
+package com.myzonesoft.todo.mvc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MicroserviceSpringbootH2JSPApplication {
+public class MicroserviceSpringbootJSPApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MicroserviceSpringbootH2JSPApplication.class, args);
+		SpringApplication.run(MicroserviceSpringbootJSPApplication.class, args);
 	}
 
 }

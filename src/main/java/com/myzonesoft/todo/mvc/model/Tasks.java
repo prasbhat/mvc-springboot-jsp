@@ -1,4 +1,4 @@
-package com.myzonesoft.microservice.todo.model;
+package com.myzonesoft.todo.mvc.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDate;
@@ -8,11 +8,11 @@ import java.util.Set;
  * To-do POJO model class
  */
 @SuppressWarnings("unused")
-public class Todo {
+public class Tasks {
     /**
      * Unique Identifier for the To-do task
      */
-    private Long id;
+    private Long systemTasksId;
     /**
      * Title for the To-do task
      */
@@ -42,7 +42,7 @@ public class Todo {
     /**
      * Default Constructor without any parameters
      */
-    public Todo() {
+    public Tasks() {
     }
 
     /**
@@ -55,8 +55,8 @@ public class Todo {
      * @param creationDate System generated creation date of the to do task
      * @param todoTaskCommentsSet Comments related to the to do task
      */
-    public Todo(Long id, String title, String description, LocalDate creationDate, LocalDate dueDate, String status, Set<TodoTaskComments> todoTaskCommentsSet) {
-        this.id = id;
+    public Tasks(Long id, String title, String description, LocalDate creationDate, LocalDate dueDate, String status, Set<TodoTaskComments> todoTaskCommentsSet) {
+        this.systemTasksId = id;
         this.title = title;
         this.description = description;
         this.creationDate = creationDate;
@@ -67,12 +67,12 @@ public class Todo {
 
     //Getters and setters for all the private variables declared above
 
-    public Long getId() {
-        return id;
+    public Long getSystemTasksId() {
+        return systemTasksId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSystemTasksId(Long id) {
+        this.systemTasksId = id;
     }
 
     public String getTitle() {
@@ -130,8 +130,8 @@ public class Todo {
      */
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Todo{");
-        sb.append("id=").append(id);
+        final StringBuilder sb = new StringBuilder("Tasks{");
+        sb.append("systemTasksId=").append(systemTasksId);
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", creationDate=").append(creationDate);

@@ -1,8 +1,7 @@
-package com.myzonesoft.microservice.todo.controller;
+package com.myzonesoft.todo.mvc.controller;
 
-import com.myzonesoft.microservice.todo.model.Todo;
-import com.myzonesoft.microservice.todo.model.TodoTaskComments;
-import com.myzonesoft.microservice.todo.util.TodoApplicationConstants;
+import com.myzonesoft.todo.mvc.model.Tasks;
+import com.myzonesoft.todo.mvc.util.TodoApplicationConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.text.MessageFormat;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * TodoViewController is the Controller class for the To-do Tracker Application.
@@ -45,7 +42,7 @@ public class TodoViewController implements TodoApplicationConstants {
      *
      * @return Redirection to index.jsp using ModelAndView
      */
-    @GetMapping("/")
+    @GetMapping
     public ModelAndView gotoHome(ModelMap model) {
         String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
         LOGGER.info(MessageFormat.format(LOGGER_ENTRY, className, methodName));
@@ -68,33 +65,33 @@ public class TodoViewController implements TodoApplicationConstants {
                                            @PathVariable("todoId") String todoId){
         String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
         LOGGER.info(MessageFormat.format(LOGGER_ENTRY, className, methodName));
-        Todo todoItem = new Todo(0L, "", "", LocalDate.now(), LocalDate.now(), "",
+        Tasks todoItem = new Tasks(0L, "", "", LocalDate.now(), null, "",
                 null);
         if(Long.parseLong(todoId) != 0) {
-            todoItem = restTemplate.getForObject(base_uri + "/find/" + todoId, Todo.class);
+            todoItem = restTemplate.getForObject(base_uri + "/" + todoId, Tasks.class);
         }
         model.put("todoItem", todoItem);
         model.put("action",action);
-        model.put("todoStatus",restTemplate.getForObject(base_uri+"/getStatus",List.class));
+        model.put("todoStatus",restTemplate.getForObject(base_uri+"/status",List.class));
         LOGGER.info(MessageFormat.format(LOGGER_EXIT, className, methodName));
         return new ModelAndView("singleItemPage");
     }
 
     @PostMapping("/create")
-    public void sendToCreate(@RequestBody Todo todoItem) {
+    public void sendToCreate(@RequestBody Tasks todoItem) {
         String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
         LOGGER.info(MessageFormat.format(LOGGER_ENTRY, className, methodName));
         LOGGER.debug("TodoObject="+todoItem);
-        restTemplate.postForObject(base_uri+"/create",todoItem,Todo.class);
+        restTemplate.postForObject(base_uri,todoItem,Tasks.class);
         LOGGER.info(MessageFormat.format(LOGGER_EXIT, className, methodName));
     }
 
     @PutMapping("/update")
-    public void sendToUpdate(@RequestBody Todo todoItem) {
+    public void sendToUpdate(@RequestBody Tasks todoItem) {
         String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
         LOGGER.info(MessageFormat.format(LOGGER_ENTRY, className, methodName));
         LOGGER.debug("TodoObject="+todoItem);
-        restTemplate.put(base_uri+"/update",todoItem,Todo.class);
+        restTemplate.put(base_uri,todoItem,Tasks.class);
         LOGGER.info(MessageFormat.format(LOGGER_EXIT, className, methodName));
     }
 
@@ -102,7 +99,7 @@ public class TodoViewController implements TodoApplicationConstants {
     public void sendToDeleteById(@PathVariable long id) {
         String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
         LOGGER.info(MessageFormat.format(LOGGER_ENTRY, className, methodName));
-        restTemplate.delete(base_uri+"/deleteById/"+id);
+        restTemplate.delete(base_uri+"/"+id);
         LOGGER.info(MessageFormat.format(LOGGER_EXIT, className, methodName));
     }
 }

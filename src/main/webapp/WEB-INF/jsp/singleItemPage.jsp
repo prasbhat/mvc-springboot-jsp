@@ -14,17 +14,11 @@
     <script type="text/javascript">
         function submit(id) {
             var jsonObj = {};
-            jsonObj['id']=id;
+            jsonObj['systemTasksId']=id;
             jsonObj['title']=document.getElementById('title').value;
             jsonObj['description']=document.getElementById('description').value;
             jsonObj['dueDate']=document.getElementById('dueDate').value;
             jsonObj['status']=document.getElementById('status').value;
-
-            var jsonCommentsArray=[];
-            var jsonCommentsObj={};
-            jsonCommentsObj["taskComments"]= document.getElementById('taskComments').value;
-            jsonCommentsArray.push(jsonCommentsObj);
-            jsonObj["todoTaskCommentsSet"] = jsonCommentsArray;
 
             var fullPath = window.location.href;
             var ctx= "${pageContext.request.contextPath}";
@@ -32,13 +26,18 @@
             var http = new XMLHttpRequest();
 
             if(id > 0) {
+                var jsonCommentsArray=[];
+                var jsonCommentsObj={};
+                jsonCommentsObj["taskComments"]= document.getElementById('taskComments').value;
+                jsonCommentsArray.push(jsonCommentsObj);
+                jsonObj["todoTaskCommentsSet"] = jsonCommentsArray;
                 http.open("PUT", apiURL+"/update", true);
             } else {
                 http.open("POST", apiURL+"/create", true);
             }
             http.setRequestHeader("Content-type","application/json");
             http.send(JSON.stringify(jsonObj));
-            window.location.href = apiURL+"/";
+            window.location.href = apiURL;
         }
 
         function addNewComments(){
@@ -99,48 +98,49 @@
                         </c:if>
                     </td>
                 </tr><tr>
-                    <th>Comments</th>
-                    <td>
-                        <c:if test="${todoItem.todoTaskCommentsSet.size() > 0}">
-                            <table class='table-bordered'>
-
-                                <thead>
-                                    <tr>
-                                        <th>Creation Date</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="comments" items="${todoItem.todoTaskCommentsSet}">
+                    <c:if test="${todoItem.systemTasksId > 0}">
+                        <th>Comments</th>
+                        <c:if test="${action == 'edit' || todoItem.todoTaskCommentsSet.size() > 0}">
+                            <td>
+                                <table class='table-bordered'>
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <fmt:parseDate  value="${comments.creationDate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
-                                                <fmt:formatDate value="${parsedDate}" type="date" pattern="dd-MMM-yyyy" />
-                                            </td>
-                                            <td><c:out value="${comments.taskComments}"/></td>
+                                            <th>Creation Date</th>
+                                            <th>Description</th>
                                         </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="comments" items="${todoItem.todoTaskCommentsSet}">
+                                            <tr>
+                                                <td>
+                                                    <fmt:parseDate  value="${comments.creationDate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
+                                                    <fmt:formatDate value="${parsedDate}" type="date" pattern="dd-MMM-yyyy" />
+                                                </td>
+                                                <td><c:out value="${comments.taskComments}"/></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                <c:if test="${action == 'edit'}">
+                                <button class="btn btn-success" onclick=addNewComments()>Add New Comments</button>
+                                <table class='table-bordered' id="commentsTable" style="display:none;">
+                                    <tbody>
+                                        <tr>
+                                            <th>Description</th>
+                                            <td><textarea name='description' id='taskComments'
+                                            rows="3" cols="38"></textarea></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </c:if>
+                            </td>
                         </c:if>
-                        <c:if test="${action == 'edit'}">
-                        <button class="btn btn-success" onclick=addNewComments()>Add New Comments</button>
-                        <table class='table-bordered' id="commentsTable" style="display:none;">
-                            <tbody>
-                                <tr>
-                                    <th>Description</th>
-                                    <td><textarea name='description' id='taskComments'
-                                    rows="3" cols="38"></textarea></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </c:if>
-                    </td>
+                    </c:if>
                 </tr>
                 <c:if test="${action == 'edit'}">
                 <tr>
                     <td colspan="2" align="center">
-                        <button class="btn btn-success" onclick=submit(${todoItem.id})>Submit</button>
+                        <button class="btn btn-success" onclick=submit(${todoItem.systemTasksId})>Submit</button>
                     </td>
                 </tr>
                 </c:if>

@@ -1,6 +1,7 @@
-# mvc-springboot-h2-jsp
+# mvc-springboot-jsp
 
-This project is an extension of **[microservice-springboot-h2](https://github.com/prasbhat/microservice-springboot-h2/blob/master/README.md)** project, where I have exposed the REST APIs from the Microservice, here I am developing a frontend using the JSP Framework in Spring Boot, for that REST API project. 
+This project is an extension of **[microservice-springboot-h2](https://github.com/prasbhat/microservice-springboot-h2/blob/master/README.md)** project, where I have exposed the REST APIs from the Microservice, 
+here I am developing a *User Interface (UI)* using the JSP Framework in Spring Boot, for that REST API project.
 
 ## Requirements
 
@@ -18,10 +19,10 @@ There are several ways to run a Spring Boot application on your local machine.
 
 Clone the repository to your local drive.
 ```shell
-git clone https://github.com/prasbhat/mvc-springboot-h2-jsp.git
+git clone https://github.com/prasbhat/mvc-springboot-jsp.git
 ```
 
-Import the project as "Maven Project" into your favourite IDE and execute the `main` method in the `com.myzonesoft.microservice.todo.MicroserviceSpringbootH2JSPApplication` class from your IDE.
+Import the project as "Maven Project" into your favourite IDE and execute the `main` method in the `MicroserviceSpringbootJSPApplication` class from your IDE.
 
 `Right Click on the file and Run as Java Application`
 
@@ -30,7 +31,7 @@ Import the project as "Maven Project" into your favourite IDE and execute the `m
 Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html) like so:
 ```shell
 git clone https://github.com/prasbhat/mvc-springboot-h2-jsp.git
-cd mvc-springboot-h2-jsp
+cd mvc-springboot-jsp
 mvn spring-boot:run
 ```
 
@@ -39,9 +40,9 @@ mvn spring-boot:run
 The code can also be built into a war and then executed/run. Once the war is built, run the war by using the command:
 ```shell
 git clone https://github.com/prasbhat/mvc-springboot-h2-jsp.git
-cd mvc-springboot-h2-jsp
+cd mvc-springboot-jsp
 mvn package -DskipTests
-java -jar target/mvc-springboot-h2-jsp-0.0.1-SNAPSHOT.war
+java -jar target/mvc-springboot-jsp-0.0.1-SNAPSHOT.war
 ```
 
-More detailed documentation regarding this project can be found [here](https://myzonesoft.com/post/mvc-springboot-h2-jsp/).
+More detailed documentation regarding this project can be found [here](https://myzonesoft.com/post/mvc-springboot-jsp/).

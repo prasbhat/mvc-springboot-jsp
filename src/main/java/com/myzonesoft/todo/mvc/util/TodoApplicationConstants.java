@@ -1,4 +1,4 @@
-package com.myzonesoft.microservice.todo.util;
+package com.myzonesoft.todo.mvc.util;
 
 public interface TodoApplicationConstants {
     //Dynamic Statements
