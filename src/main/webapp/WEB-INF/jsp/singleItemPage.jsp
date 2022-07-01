@@ -67,11 +67,13 @@
                             rows="3" cols="38">${todoItem.description}</textarea></c:if>
                     </td>
                 </tr><tr>
+                    <c:if test="${todoItem.systemTasksId > 0}">
                      <th>Creation Date</th>
                      <td>
                          <fmt:parseDate  value="${todoItem.creationDate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
                          <fmt:formatDate value="${parsedDate}" type="date" pattern="dd-MMM-yyyy" />
                      </td>
+                     </c:if>
                 </tr><tr>
                     <th>Due Date</th>
                     <td>

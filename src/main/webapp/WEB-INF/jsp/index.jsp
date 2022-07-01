@@ -46,24 +46,24 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${todoList}" var="todo">
+            <c:forEach items="${todoList}" var="tasks">
                 <tr>
-                    <td>${todo.title}</td>
-                    <td>${todo.description}</td>
+                    <td>${tasks.title}</td>
+                    <td>${tasks.description}</td>
                     <td>
-                        <fmt:parseDate  value="${todo.dueDate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
+                        <fmt:parseDate  value="${tasks.dueDate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
                         <fmt:formatDate value="${parsedDate}" type="date" pattern="dd-MMM-yyyy" />
                     </td>
-                    <td>${todo.status}</td>
-                    <td align="center">${todo.todoTaskCommentsSet.size()}</td>
+                    <td>${tasks.status}</td>
+                    <td align="center">${tasks.todoTaskCommentsSet.size()}</td>
                     <td>
-                        <button class="btn btn-success" onclick=redirectToSingleView('view','${todo.systemTasksId}')>VIEW</button>
+                        <button class="btn btn-success" onclick=redirectToSingleView('view','${tasks.systemTasksId}')>VIEW</button>
                     </td>
                     <td>
-                        <button class="btn btn-success" onclick=redirectToSingleView('edit','${todo.systemTasksId}')>EDIT</button>
+                        <button class="btn btn-success" onclick=redirectToSingleView('edit','${tasks.systemTasksId}')>EDIT</button>
                     </td>
                     <td>
-                        <button class="btn btn-warning" onclick=deleteById('${todo.systemTasksId}')>DELETE</button>
+                        <button class="btn btn-warning" onclick=deleteById('${tasks.systemTasksId}')>DELETE</button>
                     </td>
                 </tr>
             </c:forEach>
